@@ -48,8 +48,6 @@
         .font-amiri { font-family: 'Amiri', serif; }
         .fade-in { animation: fadeIn 0.3s ease-out forwards; opacity: 0; transform: translateY(10px); }
         @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         html { scroll-behavior: smooth; }
         
         .quote-box { position: relative; }
@@ -67,17 +65,28 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-between p-4 md:p-8">
 
-    <div class="w-full flex-grow flex flex-col items-center justify-center">
+    <!-- شريط التنبيه العلوي -->
+    <div class="w-full max-w-3xl mb-2 bg-brand-card/80 border border-brand-accent/20 rounded-2xl py-2.5 px-4 text-center shadow-sm fade-in">
+        <p class="text-xs md:text-sm font-bold text-brand-secondary flex items-center justify-center gap-2">
+            <svg class="w-4 h-4 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>تنويه: مسموح بـ 5 عمليات بحث متتالية، ثم استراحة قصيرة لمدة 30 ثانية للحفاظ على استقرار الموقع.</span>
+        </p>
+    </div>
+
+    <div class="w-full flex-grow flex flex-col items-center justify-center gap-6">
         
+        <!-- الكتلة الرئيسية للموقع -->
         <div class="bg-brand-card w-full max-w-3xl rounded-3xl shadow-portal p-6 md:p-10 border border-brand-primary/5 fade-in">
             
-            <div class="text-center mb-8">
-                <h1 class="text-4xl md:text-5xl font-black text-brand-primary mb-3 tracking-tight">نتيجة الثانوية العامة</h1>
-                <p class="text-brand-secondary font-bold text-lg">ابحث برقم الجلوس أو الاسم — المجموع من 320 درجة</p>
+            <div class="text-center mb-8 overflow-hidden">
+                <h1 class="text-4xl md:text-5xl font-black text-brand-primary mb-3 tracking-tight flex flex-wrap items-center justify-center gap-3">
+                    نتيجة الثانوية العامة
+                    <span class="bg-brand-primary text-brand-bg px-4 py-1 rounded-2xl text-2xl md:text-4xl shadow-sm leading-none">2027</span>
+                </h1>
+                <p class="text-brand-secondary font-bold text-xs sm:text-sm md:text-base mt-2 whitespace-nowrap">ابحث برقم الجلوس أو الاسم - المجموع من 320 درجة</p>
                 
                 <!-- قسم العدادات -->
                 <div class="mt-6 flex flex-col md:flex-row justify-center items-center gap-3 w-full">
-                    
                     <div class="bg-brand-input px-5 py-2 rounded-xl border border-brand-primary/5 text-sm font-bold text-brand-secondary flex items-center justify-center gap-2 w-full md:w-auto">
                         <svg class="w-4 h-4 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                         <span>إجمالي الطلاب: <span id="total-students" class="text-brand-primary font-black">...</span></span>
@@ -97,10 +106,10 @@
                 </div>
             </div>
 
-            <!-- قسم الطمأنينة -->
+            <!-- قسم الآية القرآنية (جوه الكتلة الرئيسية) -->
             <div class="w-full max-w-lg mx-auto mb-8 bg-brand-bg/50 border border-brand-accent/20 rounded-2xl p-6 text-center min-h-[140px] flex flex-col justify-center">
                 <p class="text-xs font-bold text-brand-accent/80 mb-4 tracking-widest uppercase">اطمئن وثق بالله</p>
-                <div id="quote-container" class="transition-opacity duration-500 opacity-0">
+                <div id="quote-container" class="transition-opacity duration-300 opacity-0">
                     <div class="quote-box px-6 mb-3">
                         <p id="islamic-quote-text" class="font-amiri text-lg md:text-xl text-brand-primary leading-loose font-bold"></p>
                     </div>
@@ -108,6 +117,7 @@
                 </div>
             </div>
 
+            <!-- صندوق البحث -->
             <div id="search-section" class="w-full max-w-lg mx-auto">
                 <form id="search-form" class="space-y-4">
                     <div>
@@ -121,8 +131,16 @@
                     </button>
                 </form>
 
+                <!-- رسالة حماية الضغط (Rate Limit) -->
+                <div id="rate-limit-msg" class="mt-4 text-center hidden">
+                    <p class="text-amber-700 font-bold text-sm bg-amber-50 py-3 rounded-xl border border-amber-200">
+                        الرجاء الانتظار قليلاً لمنع الضغط الوهمي... <span id="countdown-timer" class="font-black">30</span> ثانية
+                    </p>
+                </div>
+
+                <!-- رسالة التحميل -->
                 <div id="loading-msg" class="mt-4 text-center hidden">
-                    <p class="text-brand-accent font-bold text-sm bg-brand-accent/5 py-2 rounded-lg border border-brand-accent/20">جاري معالجة الطلب في السجل...</p>
+                    <p class="text-brand-accent font-bold text-sm bg-brand-accent/5 py-2 rounded-lg border border-brand-accent/20">جاري إحضار النتيجة...</p>
                 </div>
                 
                 <div id="error-message" class="mt-4 text-center hidden">
@@ -130,14 +148,16 @@
                 </div>
             </div>
 
+            <!-- نتائج الأسماء -->
             <div id="name-results" class="hidden w-full mt-10 pt-8 border-t border-brand-primary/5 fade-in scroll-mt-6">
                 <div class="text-center mb-6">
                     <p class="text-brand-secondary font-bold text-lg">الرجاء اختيار الطالب من النتائج التالية (<span id="results-count" class="text-brand-primary">0</span>)</p>
                 </div>
-                <ul id="name-list" class="space-y-3 max-h-[45vh] overflow-y-auto hide-scrollbar px-1">
+                <ul id="name-list" class="space-y-3 px-1">
                 </ul>
             </div>
 
+            <!-- نتيجة الطالب -->
             <div id="result-section" class="hidden w-full mt-10 pt-8 border-t border-brand-primary/5 fade-in scroll-mt-6">
                 
                 <div class="text-center mb-8">
@@ -184,25 +204,29 @@
                 </div>
             </div>
 
-            <!-- قسم الأذكار -->
-            <div class="w-full max-w-lg mx-auto mt-10 bg-brand-input/50 border border-brand-primary/10 rounded-2xl p-4 text-center relative flex items-center justify-center min-h-[90px]">
-                 <div id="dhikr-container" class="transition-opacity duration-500 opacity-0">
-                    <p id="dhikr-text" class="text-sm md:text-base text-brand-primary font-bold leading-relaxed font-amiri"></p>
-                </div>
-            </div>
+        </div> <!-- نهاية الكتلة الرئيسية للموقع -->
 
+        <!-- كتلة الأذكار المستقلة (منفصلة لوحدها تحت الكتلة الرئيسية) -->
+        <div class="w-full max-w-xl mx-auto bg-brand-card rounded-2xl shadow-sm border border-brand-primary/5 fade-in p-6 text-center flex items-center justify-center min-h-[90px]">
+            <div id="dhikr-container" class="transition-opacity duration-300 opacity-0">
+                <p id="dhikr-text" class="text-sm md:text-base text-brand-secondary font-bold leading-relaxed font-amiri"></p>
+            </div>
         </div>
+
     </div>
 
     <!-- الفوتر -->
-    <footer class="w-full text-center py-6 mt-4">
-        <p class="text-sm md:text-base text-brand-secondary font-bold tracking-wide">
-            حقوق التصميم محفوظة <span class="font-black text-brand-primary ml-1">Ahmed</span><span class="font-black text-brand-accent mx-0.5">©️2027</span><span class="text-brand-primary">🖤</span>
-        </p>
+    <footer class="w-full text-center py-6 mt-2">
+        <div class="text-sm md:text-base text-brand-secondary font-bold tracking-wide flex items-center justify-center flex-wrap gap-1.5">
+            <span>حقوق التصميم محفوظة</span>
+            <span class="font-black text-brand-accent flex items-center" dir="ltr">©️2027</span>
+            <span class="font-black text-brand-primary flex items-center" dir="ltr">
+                <span>🖤</span><span>Ahmed</span>
+            </span>
+        </div>
     </footer>
 
     <script>
-        // تم تكبير وتوسيع قائمة الآيات والأحاديث
         const quotes = [
             { text: "﴿ وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ ۚ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ ﴾", source: "سورة هود" },
             { text: "﴿ وَأَن لَّيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ * وَأَنَّ سَعْيَهُ سَوْفَ يُرَىٰ ﴾", source: "سورة النجم" },
@@ -222,7 +246,6 @@
             { text: "« مَنْ يُرِدِ اللَّهُ بِهِ خَيْرًا يُصِبْ مِنْهُ »", source: "رواه البخاري" }
         ];
 
-        // تم تكبير قائمة الأذكار لتتغير باستمرار
         const adhkar = [
             "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ.",
             "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ العَظِيمِ.",
@@ -245,10 +268,11 @@
             const quoteContainer = document.getElementById('quote-container');
             const quoteTextEl = document.getElementById('islamic-quote-text');
             const quoteSourceEl = document.getElementById('islamic-quote-source');
-            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
             
             const dhikrContainer = document.getElementById('dhikr-container');
             const dhikrTextEl = document.getElementById('dhikr-text');
+            
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
             const randomDhikr = adhkar[Math.floor(Math.random() * adhkar.length)];
             
             quoteContainer.style.opacity = 0;
@@ -261,10 +285,9 @@
                 
                 quoteContainer.style.opacity = 1;
                 dhikrContainer.style.opacity = 1;
-            }, 300);
+            }, 150);
         }
 
-        // بيتم اختيار آية وذكر عشوائي أول ما الصفحة تفتح
         changeContent();
 
         const searchForm = document.getElementById('search-form');
@@ -273,6 +296,9 @@
         const loadingMsg = document.getElementById('loading-msg');
         const searchBtn = document.getElementById('search-btn');
         
+        const rateLimitMsg = document.getElementById('rate-limit-msg');
+        const countdownTimer = document.getElementById('countdown-timer');
+
         const nameResults = document.getElementById('name-results');
         const resultSection = document.getElementById('result-section');
         const resultsCountLabel = document.getElementById('results-count');
@@ -303,13 +329,10 @@
             try {
                 const uniqueUrl = `https://api.counterapi.dev/v1/${counterNamespace}/global_visits/up?t=${new Date().getTime()}`;
                 const res = await fetch(uniqueUrl, { method: 'GET', headers: { 'Cache-Control': 'no-store' } });
-                
                 if (res.ok) {
                     const data = await res.json();
                     const totalVisits = baseVisitorNumber + data.count;
                     visitorsCounterDisplay.textContent = totalVisits.toLocaleString('en-US');
-                } else {
-                    visitorsCounterDisplay.textContent = baseVisitorNumber.toLocaleString('en-US');
                 }
             } catch (e) {
                 visitorsCounterDisplay.textContent = baseVisitorNumber.toLocaleString('en-US');
@@ -321,13 +344,10 @@
             try {
                 const uniqueUrl = `https://api.counterapi.dev/v1/${counterNamespace}/global_searches?t=${new Date().getTime()}`;
                 const res = await fetch(uniqueUrl, { method: 'GET', headers: { 'Cache-Control': 'no-store' } });
-                
                 if (res.ok) {
                     const data = await res.json();
                     const totalSearches = baseSearchNumber + (data.count || 0);
                     searchesCounterDisplay.textContent = totalSearches.toLocaleString('en-US');
-                } else {
-                    searchesCounterDisplay.textContent = baseSearchNumber.toLocaleString('en-US');
                 }
             } catch (e) {
                 searchesCounterDisplay.textContent = baseSearchNumber.toLocaleString('en-US');
@@ -335,37 +355,75 @@
         }
         loadGlobalSearches();
 
-        async function incrementGlobalSearches() {
-            try {
-                const uniqueUrl = `https://api.counterapi.dev/v1/${counterNamespace}/global_searches/up?t=${new Date().getTime()}`;
-                const res = await fetch(uniqueUrl, { method: 'GET', headers: { 'Cache-Control': 'no-store' } });
-                if (res.ok) {
-                    const data = await res.json();
+        function incrementGlobalSearches() {
+            const uniqueUrl = `https://api.counterapi.dev/v1/${counterNamespace}/global_searches/up?t=${new Date().getTime()}`;
+            fetch(uniqueUrl, { method: 'GET', headers: { 'Cache-Control': 'no-store' } })
+                .then(res => res.json())
+                .then(data => {
                     const totalSearches = baseSearchNumber + data.count;
                     searchesCounterDisplay.textContent = totalSearches.toLocaleString('en-US');
-                }
-            } catch (e) {
-                console.error("Search counter update failed");
-            }
+                }).catch(e => console.error("Search counter error"));
         }
+
+        // 🟢 نظام الحماية (Rate Limiting) 🟢
+        function checkRateLimit() {
+            const now = new Date().getTime();
+            let searchData = JSON.parse(localStorage.getItem('user_search_limit_v2')) || { count: 0, lockUntil: 0 };
+
+            if (searchData.lockUntil > now) {
+                const remainingSeconds = Math.ceil((searchData.lockUntil - now) / 1000);
+                countdownTimer.textContent = remainingSeconds;
+                rateLimitMsg.classList.remove('hidden');
+                searchBtn.disabled = true;
+                searchBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                
+                setTimeout(checkRateLimit, 1000);
+                return false;
+            } else {
+                if (searchBtn.disabled) {
+                    searchBtn.disabled = false;
+                    searchBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    rateLimitMsg.classList.add('hidden');
+                }
+            }
+            return true;
+        }
+
+        checkRateLimit();
 
         searchForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            if (!checkRateLimit()) return;
+
             const query = searchInput.value.trim();
             if (!query) return;
 
-            incrementGlobalSearches();
+            // تسجيل محاولة البحث للحماية
+            let searchData = JSON.parse(localStorage.getItem('user_search_limit_v2')) || { count: 0, lockUntil: 0 };
+            searchData.count++;
 
+            if (searchData.count >= 5) {
+                searchData.lockUntil = new Date().getTime() + 30000; // 30 ثانية حظر
+                searchData.count = 0; 
+                localStorage.setItem('user_search_limit_v2', JSON.stringify(searchData));
+                checkRateLimit();
+            } else {
+                localStorage.setItem('user_search_limit_v2', JSON.stringify(searchData));
+            }
+
+            incrementGlobalSearches();
             searchInput.blur();
             
-            // بيغير الآية والذكر مع كل بحث جديد برضه كنوع من التجديد
-            changeContent();
+            setTimeout(changeContent, 10);
             
             errorMsg.classList.add('hidden');
             nameResults.classList.add('hidden');
             resultSection.classList.add('hidden');
             loadingMsg.classList.remove('hidden');
+            rateLimitMsg.classList.add('hidden'); 
+
+            await new Promise(resolve => setTimeout(resolve, 50));
 
             try {
                 if (/^\d+$/.test(query)) {
@@ -378,6 +436,10 @@
             }
             
             loadingMsg.classList.add('hidden');
+            
+            if (searchData.count === 0 && new Date().getTime() < searchData.lockUntil) {
+                 rateLimitMsg.classList.remove('hidden');
+            }
         });
 
         async function searchBySeat(seatNumber) {
@@ -417,24 +479,20 @@
             const listEl = document.getElementById('name-list');
             listEl.innerHTML = '';
             
+            let htmlContent = '';
             matches.slice(0, 30).forEach((student) => {
-                const pill = document.createElement('li');
-                pill.className = `bg-brand-input rounded-2xl p-5 cursor-pointer transition-colors hover:bg-brand-primary/5 border border-brand-primary/5 text-center`;
-                
-                pill.innerHTML = `
-                    <h3 class="font-black text-xl text-brand-primary mb-2">${student.n}</h3>
-                    <p class="text-brand-secondary font-bold text-sm">رقم الجلوس: <span class="text-brand-primary">${student.s}</span></p>
+                htmlContent += `
+                    <li class="bg-brand-input rounded-2xl p-5 cursor-pointer transition-colors hover:bg-brand-primary/5 border border-brand-primary/5 text-center"
+                        onclick="searchInput.value = '${student.s}'; document.getElementById('search-btn').click();">
+                        <h3 class="font-black text-xl text-brand-primary mb-2">${student.n}</h3>
+                        <p class="text-brand-secondary font-bold text-sm">رقم الجلوس: <span class="text-brand-primary">${student.s}</span></p>
+                    </li>
                 `;
-                
-                pill.onclick = () => {
-                    searchInput.value = student.s;
-                    document.getElementById('search-btn').click();
-                };
-                listEl.appendChild(pill);
             });
+            listEl.innerHTML = htmlContent;
             
             nameResults.classList.remove('hidden');
-            setTimeout(() => { nameResults.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+            setTimeout(() => { nameResults.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
         }
 
         function displayResultCard(student) {
@@ -467,7 +525,7 @@
 
             nameResults.classList.add('hidden');
             resultSection.classList.remove('hidden');
-            setTimeout(() => { resultSection.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 50);
+            setTimeout(() => { resultSection.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 100);
         }
 
         function roundPercentage(score) {
