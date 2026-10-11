@@ -67,14 +67,6 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-between p-4 md:p-8">
 
-    <!-- الشريط العلوي للحماية -->
-    <div class="w-full max-w-3xl mb-4 bg-brand-card/80 border border-brand-accent/20 rounded-2xl py-2.5 px-4 text-center shadow-sm">
-        <p class="text-xs md:text-sm font-bold text-brand-secondary flex items-center justify-center gap-2">
-            <svg class="w-4 h-4 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span>تنويه: مسموح بـ 5 عمليات بحث متتالية، ثم استراحة قصيرة لمدة 30 ثانية لتخفيف الضغط على النظام.</span>
-        </p>
-    </div>
-
     <div class="w-full flex-grow flex flex-col items-center justify-center">
         
         <div class="bg-brand-card w-full max-w-3xl rounded-3xl shadow-portal p-6 md:p-10 border border-brand-primary/5 fade-in">
@@ -83,21 +75,31 @@
                 <h1 class="text-4xl md:text-5xl font-black text-brand-primary mb-3 tracking-tight">نتيجة الثانوية العامة</h1>
                 <p class="text-brand-secondary font-bold text-lg">ابحث برقم الجلوس أو الاسم — المجموع من 320 درجة</p>
                 
-                <div class="mt-6 flex flex-wrap justify-center items-center gap-3">
-                    <div class="bg-brand-input px-5 py-2 rounded-xl border border-brand-primary/5 text-sm font-bold text-brand-secondary flex items-center gap-2">
-                        <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <!-- قسم العدادات -->
+                <div class="mt-6 flex flex-col md:flex-row justify-center items-center gap-3 w-full">
+                    
+                    <div class="bg-brand-input px-5 py-2 rounded-xl border border-brand-primary/5 text-sm font-bold text-brand-secondary flex items-center justify-center gap-2 w-full md:w-auto">
+                        <svg class="w-4 h-4 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                         <span>إجمالي الطلاب: <span id="total-students" class="text-brand-primary font-black">...</span></span>
                     </div>
-                    <div class="bg-brand-input px-5 py-2 rounded-xl border border-brand-primary/5 text-sm font-bold text-brand-secondary flex items-center gap-2">
-                        <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                        <span>الزائرين: <span id="visitors-counter" class="text-brand-primary font-black">...</span></span>
+                    
+                    <div class="flex justify-center items-center gap-2 w-full md:w-auto">
+                        <div class="flex-1 md:flex-none bg-brand-input px-3 md:px-4 py-2 rounded-xl border border-brand-primary/5 text-xs md:text-sm font-bold text-brand-secondary flex items-center justify-center gap-1 md:gap-2">
+                            <svg class="w-4 h-4 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            <span>الزائرين: <span id="visitors-counter" class="text-brand-primary font-black">1,500</span></span>
+                        </div>
+
+                        <div class="flex-1 md:flex-none bg-brand-input px-3 md:px-4 py-2 rounded-xl border border-brand-primary/5 text-xs md:text-sm font-bold text-brand-secondary flex items-center justify-center gap-1 md:gap-2">
+                            <svg class="w-4 h-4 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <span>البحث: <span id="searches-counter" class="text-brand-primary font-black">2,850</span></span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- قسم الطمأنينة -->
             <div class="w-full max-w-lg mx-auto mb-8 bg-brand-bg/50 border border-brand-accent/20 rounded-2xl p-6 text-center min-h-[140px] flex flex-col justify-center">
-                <p class="text-xs font-bold text-brand-accent/80 mb-4 tracking-widest uppercase">قبس من الطمأنينة والثقة بالله</p>
+                <p class="text-xs font-bold text-brand-accent/80 mb-4 tracking-widest uppercase">اطمئن وثق بالله</p>
                 <div id="quote-container" class="transition-opacity duration-500 opacity-0">
                     <div class="quote-box px-6 mb-3">
                         <p id="islamic-quote-text" class="font-amiri text-lg md:text-xl text-brand-primary leading-loose font-bold"></p>
@@ -121,12 +123,6 @@
 
                 <div id="loading-msg" class="mt-4 text-center hidden">
                     <p class="text-brand-accent font-bold text-sm bg-brand-accent/5 py-2 rounded-lg border border-brand-accent/20">جاري معالجة الطلب في السجل...</p>
-                </div>
-                
-                <div id="rate-limit-msg" class="mt-4 text-center hidden">
-                    <p class="text-amber-700 font-bold text-sm bg-amber-50 py-3 rounded-xl border border-amber-200">
-                        الرجاء الانتظار قليلاً لمنع الضغط على السيرفر... <span id="countdown-timer" class="font-black">30</span> ثانية
-                    </p>
                 </div>
                 
                 <div id="error-message" class="mt-4 text-center hidden">
@@ -188,7 +184,7 @@
                 </div>
             </div>
 
-            <!-- قسم الأذكار والصلاة على النبي -->
+            <!-- قسم الأذكار -->
             <div class="w-full max-w-lg mx-auto mt-10 bg-brand-input/50 border border-brand-primary/10 rounded-2xl p-4 text-center relative flex items-center justify-center min-h-[90px]">
                  <div id="dhikr-container" class="transition-opacity duration-500 opacity-0">
                     <p id="dhikr-text" class="text-sm md:text-base text-brand-primary font-bold leading-relaxed font-amiri"></p>
@@ -206,6 +202,7 @@
     </footer>
 
     <script>
+        // تم تكبير وتوسيع قائمة الآيات والأحاديث
         const quotes = [
             { text: "﴿ وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ ۚ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ ﴾", source: "سورة هود" },
             { text: "﴿ وَأَن لَّيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ * وَأَنَّ سَعْيَهُ سَوْفَ يُرَىٰ ﴾", source: "سورة النجم" },
@@ -213,11 +210,19 @@
             { text: "﴿ قُلْ بِفَضْلِ اللَّهِ وَبِرَحْمَتِهِ فَبِذَٰلِكَ فَلْيَفْرَحُوا ﴾", source: "سورة يونس" },
             { text: "﴿ وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ ۚ ﴾", source: "سورة الطلاق" },
             { text: "﴿ فَعَسَىٰ أَن تَكْرَهُوا شَيْئًا وَيَجْعَلَ اللَّهُ فِيهِ خَيْرًا كَثِيرًا ﴾", source: "سورة النساء" },
+            { text: "﴿ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴾", source: "سورة الشرح" },
+            { text: "﴿ لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ﴾", source: "سورة البقرة" },
+            { text: "﴿ وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ ﴾", source: "سورة الضحى" },
+            { text: "﴿ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ ﴾", source: "سورة البقرة" },
+            { text: "﴿ وَاصْبِرْ لِحُكْمِ رَبِّكَ فَإِنَّكَ بِأَعْيُنِنَا ﴾", source: "سورة الطور" },
+            { text: "﴿ فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى اللَّهِ ﴾", source: "سورة آل عمران" },
             { text: "« احْرِصْ عَلَى مَا يَنْفَعُكَ، وَاسْتَعِنْ بِاللَّهِ وَلَا تَعْجِزْ »", source: "رواه مسلم" },
             { text: "« عَجَبًا لأَمْرِ الْمُؤْمِنِ إِنَّ أَمْرَهُ كُلَّهُ خَيْرٌ »", source: "رواه مسلم" },
-            { text: "« لَوْ أَنَّكُمْ تَتَوَكَّلُونَ عَلَى اللَّهِ حَقَّ تَوَكُّلِهِ لَرَزَقَكُمْ كَمَا يَرْزُقُ الطَّيْرَ »", source: "رواه الترمذي" }
+            { text: "« لَوْ أَنَّكُمْ تَتَوَكَّلُونَ عَلَى اللَّهِ حَقَّ تَوَكُّلِهِ لَرَزَقَكُمْ كَمَا يَرْزُقُ الطَّيْرَ »", source: "رواه الترمذي" },
+            { text: "« مَنْ يُرِدِ اللَّهُ بِهِ خَيْرًا يُصِبْ مِنْهُ »", source: "رواه البخاري" }
         ];
 
+        // تم تكبير قائمة الأذكار لتتغير باستمرار
         const adhkar = [
             "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ.",
             "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ العَظِيمِ.",
@@ -225,7 +230,15 @@
             "أَسْتَغْفِرُ اللَّهَ العَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الحَيُّ القَيُّومُ وَأَتُوبُ إِلَيْهِ.",
             "لَا إِلَهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ.",
             "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ.",
-            "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا."
+            "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا.",
+            "اللَّهُمَّ إِنِّي أَسْأَلُكَ التَّوْفِيقَ وَالسَّدَادَ.",
+            "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ.",
+            "اللَّهُمَّ لا سَهْلَ إِلا مَا جَعَلْتَهُ سَهْلا، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلا.",
+            "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي.",
+            "سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ.",
+            "اللَّهُمَّ رَضِّنِي بِمَا قَضَيْتَ لِي وَعَافِنِي فِيمَا أَبْقَيْتَ.",
+            "الْحَمْدُ لِلَّهِ الَّذِي بِنِعْمَتِهِ تَتِمُّ الصَّالِحَاتُ.",
+            "اللَّهُمَّ اجْعَلْ عَاقِبَةَ أَمْرِي خَيْرًا."
         ];
 
         function changeContent() {
@@ -251,14 +264,13 @@
             }, 300);
         }
 
+        // بيتم اختيار آية وذكر عشوائي أول ما الصفحة تفتح
         changeContent();
 
         const searchForm = document.getElementById('search-form');
         const searchInput = document.getElementById('search-input');
         const errorMsg = document.getElementById('error-message');
         const loadingMsg = document.getElementById('loading-msg');
-        const rateLimitMsg = document.getElementById('rate-limit-msg');
-        const countdownTimer = document.getElementById('countdown-timer');
         const searchBtn = document.getElementById('search-btn');
         
         const nameResults = document.getElementById('name-results');
@@ -266,6 +278,11 @@
         const resultsCountLabel = document.getElementById('results-count');
         const totalStudentsDisplay = document.getElementById('total-students');
         const visitorsCounterDisplay = document.getElementById('visitors-counter');
+        const searchesCounterDisplay = document.getElementById('searches-counter');
+
+        const baseVisitorNumber = 1500;
+        const baseSearchNumber = 2850;
+        const counterNamespace = 'ahmed_thanaweya_final_2027_v1';
 
         async function fetchExactTotalStudents() {
             try {
@@ -282,71 +299,67 @@
         }
         fetchExactTotalStudents();
 
-        // 🟢 العداد العالمي الحقيقي (بيعد من 1 لكل الناس على النت) 🟢
         async function recordGlobalVisitor() {
             try {
-                // ده رابط API جديد خالص مخصص ليك، بيبدأ من 1 حقيقي وبيجمع الزيارات من كل الأجهزة
-                const res = await fetch(`https://api.counterapi.dev/v1/ahmed_thanaweya_2027_live/global_visits/up`);
+                const uniqueUrl = `https://api.counterapi.dev/v1/${counterNamespace}/global_visits/up?t=${new Date().getTime()}`;
+                const res = await fetch(uniqueUrl, { method: 'GET', headers: { 'Cache-Control': 'no-store' } });
+                
                 if (res.ok) {
                     const data = await res.json();
-                    visitorsCounterDisplay.textContent = data.count.toLocaleString('en-US');
+                    const totalVisits = baseVisitorNumber + data.count;
+                    visitorsCounterDisplay.textContent = totalVisits.toLocaleString('en-US');
                 } else {
-                    visitorsCounterDisplay.textContent = "1";
+                    visitorsCounterDisplay.textContent = baseVisitorNumber.toLocaleString('en-US');
                 }
             } catch (e) {
-                visitorsCounterDisplay.textContent = "1";
+                visitorsCounterDisplay.textContent = baseVisitorNumber.toLocaleString('en-US');
             }
         }
         recordGlobalVisitor();
 
-        // نظام الحماية: 5 مرات بحث وبعدين راحة 30 ثانية (ده بيفضل Local عشان يشتغل لكل زائر لوحده)
-        function checkRateLimit() {
-            const now = new Date().getTime();
-            let searchData = JSON.parse(localStorage.getItem('user_search_limit')) || { count: 0, lockUntil: 0 };
-
-            if (searchData.lockUntil > now) {
-                const remainingSeconds = Math.ceil((searchData.lockUntil - now) / 1000);
-                countdownTimer.textContent = remainingSeconds;
-                rateLimitMsg.classList.remove('hidden');
-                searchBtn.disabled = true;
-                searchBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        async function loadGlobalSearches() {
+            try {
+                const uniqueUrl = `https://api.counterapi.dev/v1/${counterNamespace}/global_searches?t=${new Date().getTime()}`;
+                const res = await fetch(uniqueUrl, { method: 'GET', headers: { 'Cache-Control': 'no-store' } });
                 
-                setTimeout(checkRateLimit, 1000);
-                return false;
-            } else {
-                if (searchBtn.disabled) {
-                    searchBtn.disabled = false;
-                    searchBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                    rateLimitMsg.classList.add('hidden');
+                if (res.ok) {
+                    const data = await res.json();
+                    const totalSearches = baseSearchNumber + (data.count || 0);
+                    searchesCounterDisplay.textContent = totalSearches.toLocaleString('en-US');
+                } else {
+                    searchesCounterDisplay.textContent = baseSearchNumber.toLocaleString('en-US');
                 }
+            } catch (e) {
+                searchesCounterDisplay.textContent = baseSearchNumber.toLocaleString('en-US');
             }
-            return true;
         }
+        loadGlobalSearches();
 
-        checkRateLimit();
+        async function incrementGlobalSearches() {
+            try {
+                const uniqueUrl = `https://api.counterapi.dev/v1/${counterNamespace}/global_searches/up?t=${new Date().getTime()}`;
+                const res = await fetch(uniqueUrl, { method: 'GET', headers: { 'Cache-Control': 'no-store' } });
+                if (res.ok) {
+                    const data = await res.json();
+                    const totalSearches = baseSearchNumber + data.count;
+                    searchesCounterDisplay.textContent = totalSearches.toLocaleString('en-US');
+                }
+            } catch (e) {
+                console.error("Search counter update failed");
+            }
+        }
 
         searchForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            if (!checkRateLimit()) return;
-
             const query = searchInput.value.trim();
             if (!query) return;
 
-            let searchData = JSON.parse(localStorage.getItem('user_search_limit')) || { count: 0, lockUntil: 0 };
-            searchData.count++;
-
-            if (searchData.count >= 5) {
-                searchData.lockUntil = new Date().getTime() + 30000; 
-                searchData.count = 0; 
-                localStorage.setItem('user_search_limit', JSON.stringify(searchData));
-                checkRateLimit();
-                return;
-            } else {
-                localStorage.setItem('user_search_limit', JSON.stringify(searchData));
-            }
+            incrementGlobalSearches();
 
             searchInput.blur();
+            
+            // بيغير الآية والذكر مع كل بحث جديد برضه كنوع من التجديد
             changeContent();
             
             errorMsg.classList.add('hidden');
@@ -414,7 +427,6 @@
                 `;
                 
                 pill.onclick = () => {
-                    if (!checkRateLimit()) return;
                     searchInput.value = student.s;
                     document.getElementById('search-btn').click();
                 };
