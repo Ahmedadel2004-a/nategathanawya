@@ -90,12 +90,12 @@
                     </div>
                     <div class="bg-brand-input px-5 py-2 rounded-xl border border-brand-primary/5 text-sm font-bold text-brand-secondary flex items-center gap-2">
                         <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                        <span>الزائرين: <span id="visitors-counter" class="text-brand-primary font-black">1</span></span>
+                        <span>الزائرين: <span id="visitors-counter" class="text-brand-primary font-black">...</span></span>
                     </div>
                 </div>
             </div>
 
-            <!-- قسم الطمأنينة (الآيات والأحاديث) -->
+            <!-- قسم الطمأنينة -->
             <div class="w-full max-w-lg mx-auto mb-8 bg-brand-bg/50 border border-brand-accent/20 rounded-2xl p-6 text-center min-h-[140px] flex flex-col justify-center">
                 <p class="text-xs font-bold text-brand-accent/80 mb-4 tracking-widest uppercase">قبس من الطمأنينة والثقة بالله</p>
                 <div id="quote-container" class="transition-opacity duration-500 opacity-0">
@@ -188,7 +188,7 @@
                 </div>
             </div>
 
-            <!-- قسم الأذكار والصلاة على النبي (السفلي) -->
+            <!-- قسم الأذكار والصلاة على النبي -->
             <div class="w-full max-w-lg mx-auto mt-10 bg-brand-input/50 border border-brand-primary/10 rounded-2xl p-4 text-center relative flex items-center justify-center min-h-[90px]">
                  <div id="dhikr-container" class="transition-opacity duration-500 opacity-0">
                     <p id="dhikr-text" class="text-sm md:text-base text-brand-primary font-bold leading-relaxed font-amiri"></p>
@@ -282,23 +282,24 @@
         }
         fetchExactTotalStudents();
 
-        // عداد زوار حقيقي يبدأ من 1 ويعد تصاعدياً لكل زائر حقيقي
-        function setupRealVisitorCounter() {
-            let visits = localStorage.getItem('site_total_visits');
-            if (!visits) {
-                visits = 120; // يبدأ من رقم حقيقي يبان إن الموقع شغال، أو يقدر يبدأ من 1 لو حابب
-            } else {
-                // بنزود زائر مع كل فتحة صفحة جديدة حقيقية للمستخدم
-                if (!sessionStorage.getItem('visited_this_session')) {
-                    visits = parseInt(visits) + 1;
-                    localStorage.setItem('site_total_visits', visits);
-                    sessionStorage.setItem('visited_this_session', 'true');
+        // 🟢 العداد العالمي الحقيقي (بيعد من 1 لكل الناس على النت) 🟢
+        async function recordGlobalVisitor() {
+            try {
+                // ده رابط API جديد خالص مخصص ليك، بيبدأ من 1 حقيقي وبيجمع الزيارات من كل الأجهزة
+                const res = await fetch(`https://api.counterapi.dev/v1/ahmed_thanaweya_2027_live/global_visits/up`);
+                if (res.ok) {
+                    const data = await res.json();
+                    visitorsCounterDisplay.textContent = data.count.toLocaleString('en-US');
+                } else {
+                    visitorsCounterDisplay.textContent = "1";
                 }
+            } catch (e) {
+                visitorsCounterDisplay.textContent = "1";
             }
-            visitorsCounterDisplay.textContent = Number(visits).toLocaleString('en-US');
         }
-        setupRealVisitorCounter();
+        recordGlobalVisitor();
 
+        // نظام الحماية: 5 مرات بحث وبعدين راحة 30 ثانية (ده بيفضل Local عشان يشتغل لكل زائر لوحده)
         function checkRateLimit() {
             const now = new Date().getTime();
             let searchData = JSON.parse(localStorage.getItem('user_search_limit')) || { count: 0, lockUntil: 0 };
@@ -457,14 +458,10 @@
             setTimeout(() => { resultSection.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 50);
         }
 
-        function refreshTotalPercentage(score) {
+        function roundPercentage(score) {
             const num = parseFloat(score);
             if(isNaN(num)) return "---";
             return ((num / 320) * 100).toFixed(2);
-        }
-
-        function roundPercentage(score) {
-            return refreshTotalPercentage(score);
         }
 
         function resetSearch() {
