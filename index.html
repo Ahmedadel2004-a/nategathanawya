@@ -69,7 +69,8 @@
     <div class="w-full max-w-3xl mb-2 bg-brand-card/80 border border-brand-accent/20 rounded-2xl py-2.5 px-4 text-center shadow-sm fade-in">
         <p class="text-xs md:text-sm font-bold text-brand-secondary flex items-center justify-center gap-2">
             <svg class="w-4 h-4 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span>تنويه: مسموح بـ 5 عمليات بحث متتالية، ثم استراحة قصيرة لمدة 30 ثانية للحفاظ على استقرار الموقع.</span>
+            <!-- تم التعديل هنا لـ 10 عمليات بحث -->
+            <span>تنويه: مسموح بـ 10 عمليات بحث متتالية، ثم استراحة قصيرة لمدة 30 ثانية للحفاظ على استقرار الموقع.</span>
         </p>
     </div>
 
@@ -120,9 +121,16 @@
             <!-- صندوق البحث -->
             <div id="search-section" class="w-full max-w-lg mx-auto">
                 <form id="search-form" class="space-y-4">
-                    <div>
+                    
+                    <!-- مربع الإدخال وزر المسح X -->
+                    <div class="relative w-full">
                         <input type="text" id="search-input" placeholder="أدخل رقم الجلوس أو الاسم هنا..." required
-                            class="w-full px-6 py-4 rounded-2xl bg-brand-input border border-brand-primary/10 focus:bg-white focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent text-lg transition-all duration-200 placeholder-brand-secondary/50 font-bold text-brand-primary text-center shadow-input">
+                            class="w-full pr-6 pl-14 py-4 rounded-2xl bg-brand-input border border-brand-primary/10 focus:bg-white focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent text-lg transition-all duration-200 placeholder-brand-secondary/50 font-bold text-brand-primary text-center shadow-input">
+                        
+                        <!-- زر الـ X المخفي افتراضياً -->
+                        <button type="button" id="clear-search-btn" class="absolute left-4 top-1/2 -translate-y-1/2 text-brand-accent hover:text-brand-primary p-2 hidden transition-colors duration-200" aria-label="مسح النص">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
                     </div>
                     
                     <button type="submit" id="search-btn"
@@ -292,6 +300,7 @@
 
         const searchForm = document.getElementById('search-form');
         const searchInput = document.getElementById('search-input');
+        const clearBtn = document.getElementById('clear-search-btn');
         const errorMsg = document.getElementById('error-message');
         const loadingMsg = document.getElementById('loading-msg');
         const searchBtn = document.getElementById('search-btn');
@@ -309,6 +318,21 @@
         const baseVisitorNumber = 1500;
         const baseSearchNumber = 2850;
         const counterNamespace = 'ahmed_thanaweya_final_2027_v1';
+
+        // 🟢 برمجة زر الـ X لمسح النص 🟢
+        searchInput.addEventListener('input', function() {
+            if (this.value.trim().length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+        });
+
+        clearBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            clearBtn.classList.add('hidden');
+            searchInput.focus();
+        });
 
         async function fetchExactTotalStudents() {
             try {
@@ -365,7 +389,7 @@
                 }).catch(e => console.error("Search counter error"));
         }
 
-        // 🟢 نظام الحماية (Rate Limiting) 🟢
+        // 🟢 نظام الحماية 10 محاولات 🟢
         function checkRateLimit() {
             const now = new Date().getTime();
             let searchData = JSON.parse(localStorage.getItem('user_search_limit_v2')) || { count: 0, lockUntil: 0 };
@@ -403,8 +427,9 @@
             let searchData = JSON.parse(localStorage.getItem('user_search_limit_v2')) || { count: 0, lockUntil: 0 };
             searchData.count++;
 
-            if (searchData.count >= 5) {
-                searchData.lockUntil = new Date().getTime() + 30000; // 30 ثانية حظر
+            // تم التعديل لـ 10 محاولات
+            if (searchData.count >= 10) {
+                searchData.lockUntil = new Date().getTime() + 30000;
                 searchData.count = 0; 
                 localStorage.setItem('user_search_limit_v2', JSON.stringify(searchData));
                 checkRateLimit();
@@ -437,6 +462,7 @@
             
             loadingMsg.classList.add('hidden');
             
+            // في حالة إن دي المحاولة العاشرة، اظهر رسالة القفل بعد ظهور النتيجة
             if (searchData.count === 0 && new Date().getTime() < searchData.lockUntil) {
                  rateLimitMsg.classList.remove('hidden');
             }
@@ -536,6 +562,7 @@
 
         function resetSearch() {
             searchInput.value = '';
+            clearBtn.classList.add('hidden'); // إخفاء زر الإكس لما نمسح البحث من تحت
             errorMsg.classList.add('hidden');
             nameResults.classList.add('hidden');
             resultSection.classList.add('hidden');
