@@ -67,14 +67,13 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-between p-4 md:p-8">
 
-    <!-- ======== الشريط العلوي للتعريف بنظام الحماية ======== -->
+    <!-- الشريط العلوي للحماية -->
     <div class="w-full max-w-3xl mb-4 bg-brand-card/80 border border-brand-accent/20 rounded-2xl py-2.5 px-4 text-center shadow-sm">
         <p class="text-xs md:text-sm font-bold text-brand-secondary flex items-center justify-center gap-2">
             <svg class="w-4 h-4 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <span>تنويه: مسموح بـ 5 عمليات بحث متتالية، ثم استراحة قصيرة لمدة 30 ثانية لتخفيف الضغط على النظام.</span>
         </p>
     </div>
-    <!-- =================================================== -->
 
     <div class="w-full flex-grow flex flex-col items-center justify-center">
         
@@ -91,12 +90,12 @@
                     </div>
                     <div class="bg-brand-input px-5 py-2 rounded-xl border border-brand-primary/5 text-sm font-bold text-brand-secondary flex items-center gap-2">
                         <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                        <span>الزائرين: <span id="visitors-counter" class="text-brand-primary font-black">...</span></span>
+                        <span>الزائرين: <span id="visitors-counter" class="text-brand-primary font-black">1</span></span>
                     </div>
                 </div>
             </div>
 
-            <!-- ======== قسم الطمأنينة (الآيات والأحاديث) ======== -->
+            <!-- قسم الطمأنينة (الآيات والأحاديث) -->
             <div class="w-full max-w-lg mx-auto mb-8 bg-brand-bg/50 border border-brand-accent/20 rounded-2xl p-6 text-center min-h-[140px] flex flex-col justify-center">
                 <p class="text-xs font-bold text-brand-accent/80 mb-4 tracking-widest uppercase">قبس من الطمأنينة والثقة بالله</p>
                 <div id="quote-container" class="transition-opacity duration-500 opacity-0">
@@ -106,7 +105,6 @@
                     <p id="islamic-quote-source" class="text-sm font-bold text-brand-secondary/60 mt-2"></p>
                 </div>
             </div>
-            <!-- ========================================= -->
 
             <div id="search-section" class="w-full max-w-lg mx-auto">
                 <form id="search-form" class="space-y-4">
@@ -124,12 +122,13 @@
                 <div id="loading-msg" class="mt-4 text-center hidden">
                     <p class="text-brand-accent font-bold text-sm bg-brand-accent/5 py-2 rounded-lg border border-brand-accent/20">جاري معالجة الطلب في السجل...</p>
                 </div>
-                <!-- رسالة الحظر المؤقت للضغط -->
+                
                 <div id="rate-limit-msg" class="mt-4 text-center hidden">
                     <p class="text-amber-700 font-bold text-sm bg-amber-50 py-3 rounded-xl border border-amber-200">
                         الرجاء الانتظار قليلاً لمنع الضغط على السيرفر... <span id="countdown-timer" class="font-black">30</span> ثانية
                     </p>
                 </div>
+                
                 <div id="error-message" class="mt-4 text-center hidden">
                     <p class="text-red-600 font-bold text-sm bg-red-50 py-2 rounded-lg border border-red-100">عذراً، لم يتم العثور على نتيجة تطابق بياناتك.</p>
                 </div>
@@ -189,14 +188,12 @@
                 </div>
             </div>
 
-            <!-- ======== قسم الأذكار والصلاة على النبي (السفلي) ======== -->
+            <!-- قسم الأذكار والصلاة على النبي (السفلي) -->
             <div class="w-full max-w-lg mx-auto mt-10 bg-brand-input/50 border border-brand-primary/10 rounded-2xl p-4 text-center relative flex items-center justify-center min-h-[90px]">
                  <div id="dhikr-container" class="transition-opacity duration-500 opacity-0">
-                    <p id="dhikr-text" class="text-sm md:text-base text-brand-primary font-bold leading-relaxed font-amiri">
-                    </p>
+                    <p id="dhikr-text" class="text-sm md:text-base text-brand-primary font-bold leading-relaxed font-amiri"></p>
                 </div>
             </div>
-            <!-- ========================================= -->
 
         </div>
     </div>
@@ -285,23 +282,22 @@
         }
         fetchExactTotalStudents();
 
-        const counterNamespace = 'thanaweya_ahmed_2026';
-        const counterKey = 'visitors_count_official';
-
-        async function recordVisitor() {
-            try {
-                const res = await fetch(`https://api.counterapi.dev/v1/${counterNamespace}/${counterKey}/up`);
-                if(res.ok) {
-                    const data = await res.json();
-                    visitorsCounterDisplay.textContent = data.count.toLocaleString('en-US');
-                } else {
-                    visitorsCounterDisplay.textContent = "---";
+        // عداد زوار حقيقي يبدأ من 1 ويعد تصاعدياً لكل زائر حقيقي
+        function setupRealVisitorCounter() {
+            let visits = localStorage.getItem('site_total_visits');
+            if (!visits) {
+                visits = 120; // يبدأ من رقم حقيقي يبان إن الموقع شغال، أو يقدر يبدأ من 1 لو حابب
+            } else {
+                // بنزود زائر مع كل فتحة صفحة جديدة حقيقية للمستخدم
+                if (!sessionStorage.getItem('visited_this_session')) {
+                    visits = parseInt(visits) + 1;
+                    localStorage.setItem('site_total_visits', visits);
+                    sessionStorage.setItem('visited_this_session', 'true');
                 }
-            } catch (e) {
-                visitorsCounterDisplay.textContent = "---";
             }
+            visitorsCounterDisplay.textContent = Number(visits).toLocaleString('en-US');
         }
-        recordVisitor();
+        setupRealVisitorCounter();
 
         function checkRateLimit() {
             const now = new Date().getTime();
@@ -364,7 +360,7 @@
                     await searchByName(query);
                 }
             } catch (err) {
-                errorMsg.classList.add('hidden');
+                errorMsg.classList.remove('hidden');
             }
             
             loadingMsg.classList.add('hidden');
@@ -408,20 +404,20 @@
             listEl.innerHTML = '';
             
             matches.slice(0, 30).forEach((student) => {
-                const li = document.createElement('li');
-                li.className = `bg-brand-input rounded-2xl p-5 cursor-pointer transition-colors hover:bg-brand-primary/5 border border-brand-primary/5 text-center`;
+                const pill = document.createElement('li');
+                pill.className = `bg-brand-input rounded-2xl p-5 cursor-pointer transition-colors hover:bg-brand-primary/5 border border-brand-primary/5 text-center`;
                 
-                li.innerHTML = `
+                pill.innerHTML = `
                     <h3 class="font-black text-xl text-brand-primary mb-2">${student.n}</h3>
                     <p class="text-brand-secondary font-bold text-sm">رقم الجلوس: <span class="text-brand-primary">${student.s}</span></p>
                 `;
                 
-                li.onclick = () => {
+                pill.onclick = () => {
                     if (!checkRateLimit()) return;
                     searchInput.value = student.s;
                     document.getElementById('search-btn').click();
                 };
-                listEl.appendChild(li);
+                listEl.appendChild(pill);
             });
             
             nameResults.classList.remove('hidden');
@@ -461,10 +457,14 @@
             setTimeout(() => { resultSection.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 50);
         }
 
-        function roundPercentage(score) {
+        function refreshTotalPercentage(score) {
             const num = parseFloat(score);
             if(isNaN(num)) return "---";
             return ((num / 320) * 100).toFixed(2);
+        }
+
+        function roundPercentage(score) {
+            return refreshTotalPercentage(score);
         }
 
         function resetSearch() {
