@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="استعلام عن نتيجة الثانوية العامة 2026/2027">
+    <meta name="description" content="استعلم الان عن نتيجة الثانوية العامة برقم الجلوس او الاسم. أسرع وأدق موقع لمعرفة نتيجة الثانوية العامة بمجرد ظهورها.">
+    <meta name="keywords" content="نتيجة الثانوية العامة, نتيجة ثانوية عامة, الثانوية العامة, نتيجة برقم الجلوس, نتيجة بالاسم, اوائل الثانوية العامة, نتيجة الثانوية 2026, نتيجة الثانوية 2027">
+    <meta name="author" content="Ahmed">
+    <meta name="robots" content="index, follow">
     <title>نتيجة الثانوية العامة</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -26,10 +29,11 @@
                     },
                     fontFamily: {
                         cairo: ['Cairo', 'sans-serif'],
+                        amiri: ['Amiri', 'serif'], 
                     },
                     boxShadow: {
-                        'soft': '0 10px 40px -10px rgba(74, 59, 44, 0.08)',
-                        'inner-soft': 'inset 0 2px 10px rgba(74, 59, 44, 0.03)',
+                        'portal': '0 4px 24px -8px rgba(74, 59, 44, 0.08)',
+                        'input': 'inset 0 2px 4px rgba(74, 59, 44, 0.02)',
                     }
                 }
             }
@@ -41,131 +45,224 @@
             background-color: #F5F3ED; 
             color: #4A3B2C;
         }
-        .fade-in { animation: fadeIn 0.4s ease-out forwards; opacity: 0; transform: translateY(15px); }
+        .font-amiri { font-family: 'Amiri', serif; }
+        .fade-in { animation: fadeIn 0.3s ease-out forwards; opacity: 0; transform: translateY(10px); }
         @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-        
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         html { scroll-behavior: smooth; }
         
-        .hover-pulse:hover { animation: pulse-soft 2s infinite; }
-        @keyframes pulse-soft {
-            0% { box-shadow: 0 0 0 0 rgba(156, 122, 88, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(156, 122, 88, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(156, 122, 88, 0); }
+        .quote-box { position: relative; }
+        .quote-box::before, .quote-box::after {
+            content: '"';
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            color: rgba(156, 122, 88, 0.2); 
+            position: absolute;
+            line-height: 1;
         }
+        .quote-box::before { top: -10px; right: 0; }
+        .quote-box::after { bottom: -20px; left: 0; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+<body class="min-h-screen flex flex-col items-center justify-between p-4 md:p-8">
 
-    <main class="w-full max-w-3xl flex-grow flex flex-col items-center justify-center">
+    <!-- ======== الشريط العلوي للتعريف بنظام الحماية ======== -->
+    <div class="w-full max-w-3xl mb-4 bg-brand-card/80 border border-brand-accent/20 rounded-2xl py-2.5 px-4 text-center shadow-sm">
+        <p class="text-xs md:text-sm font-bold text-brand-secondary flex items-center justify-center gap-2">
+            <svg class="w-4 h-4 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>تنويه: مسموح بـ 5 عمليات بحث متتالية، ثم استراحة قصيرة لمدة 30 ثانية لتخفيف الضغط على النظام.</span>
+        </p>
+    </div>
+    <!-- =================================================== -->
+
+    <div class="w-full flex-grow flex flex-col items-center justify-center">
         
-        <div class="bg-brand-card w-full rounded-[2.5rem] shadow-soft p-6 md:p-12 border border-brand-primary/5 fade-in relative overflow-hidden">
+        <div class="bg-brand-card w-full max-w-3xl rounded-3xl shadow-portal p-6 md:p-10 border border-brand-primary/5 fade-in">
             
-            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-accent/30 to-transparent"></div>
-
-            <div class="text-center mb-10">
-                <h1 class="text-4xl md:text-5xl font-black text-brand-primary mb-3">نتيجة الثانوية العامة</h1>
-                <p class="text-brand-secondary font-semibold text-lg md:text-xl">ابحث برقم الجلوس أو الاسم — المجموع من 320 درجة</p>
+            <div class="text-center mb-8">
+                <h1 class="text-4xl md:text-5xl font-black text-brand-primary mb-3 tracking-tight">نتيجة الثانوية العامة</h1>
+                <p class="text-brand-secondary font-bold text-lg">ابحث برقم الجلوس أو الاسم — المجموع من 320 درجة</p>
                 
-                <div class="mt-4 inline-flex items-center gap-4 bg-brand-input px-6 py-2 rounded-full text-sm font-bold text-brand-secondary border border-brand-primary/5">
-                    <span>عدد الطلاب: <span id="total-students" class="text-brand-accent">جاري الحساب...</span></span>
-                    <span class="w-1 h-1 rounded-full bg-brand-secondary/30"></span>
-                    <span>عدد الزائرين: <span id="visitors-counter" class="text-brand-primary">...</span></span>
+                <div class="mt-6 flex flex-wrap justify-center items-center gap-3">
+                    <div class="bg-brand-input px-5 py-2 rounded-xl border border-brand-primary/5 text-sm font-bold text-brand-secondary flex items-center gap-2">
+                        <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        <span>إجمالي الطلاب: <span id="total-students" class="text-brand-primary font-black">...</span></span>
+                    </div>
+                    <div class="bg-brand-input px-5 py-2 rounded-xl border border-brand-primary/5 text-sm font-bold text-brand-secondary flex items-center gap-2">
+                        <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        <span>الزائرين: <span id="visitors-counter" class="text-brand-primary font-black">...</span></span>
+                    </div>
                 </div>
             </div>
 
-            <div id="search-section" class="w-full max-w-xl mx-auto mb-4 relative z-10">
-                <form id="search-form" class="space-y-5">
-                    <div class="relative group">
+            <!-- ======== قسم الطمأنينة (الآيات والأحاديث) ======== -->
+            <div class="w-full max-w-lg mx-auto mb-8 bg-brand-bg/50 border border-brand-accent/20 rounded-2xl p-6 text-center min-h-[140px] flex flex-col justify-center">
+                <p class="text-xs font-bold text-brand-accent/80 mb-4 tracking-widest uppercase">قبس من الطمأنينة والثقة بالله</p>
+                <div id="quote-container" class="transition-opacity duration-500 opacity-0">
+                    <div class="quote-box px-6 mb-3">
+                        <p id="islamic-quote-text" class="font-amiri text-lg md:text-xl text-brand-primary leading-loose font-bold"></p>
+                    </div>
+                    <p id="islamic-quote-source" class="text-sm font-bold text-brand-secondary/60 mt-2"></p>
+                </div>
+            </div>
+            <!-- ========================================= -->
+
+            <div id="search-section" class="w-full max-w-lg mx-auto">
+                <form id="search-form" class="space-y-4">
+                    <div>
                         <input type="text" id="search-input" placeholder="أدخل رقم الجلوس أو الاسم هنا..." required
-                            class="w-full px-8 py-5 rounded-[2rem] bg-brand-input border-2 border-transparent focus:bg-white focus:outline-none focus:border-brand-accent/40 text-lg transition-all duration-300 placeholder-brand-secondary/40 font-bold text-brand-primary text-center shadow-inner-soft">
+                            class="w-full px-6 py-4 rounded-2xl bg-brand-input border border-brand-primary/10 focus:bg-white focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent text-lg transition-all duration-200 placeholder-brand-secondary/50 font-bold text-brand-primary text-center shadow-input">
                     </div>
                     
                     <button type="submit" id="search-btn"
-                        class="w-full bg-brand-accent hover:bg-brand-hover hover-pulse text-white font-bold py-5 rounded-[2rem] transition-all duration-300 text-xl tracking-wide shadow-lg shadow-brand-accent/20 flex justify-center items-center gap-2">
-                        <span>استعلام</span>
+                        class="w-full bg-brand-accent hover:bg-brand-hover text-white font-bold py-4 rounded-2xl transition-colors duration-200 text-xl tracking-wide shadow-md">
+                        استعلام عن النتيجة
                     </button>
                 </form>
 
-                <p id="loading-msg" class="text-brand-accent mt-6 font-bold text-center hidden animate-pulse">جاري معالجة الطلب...</p>
-                <p id="error-message" class="text-red-500 mt-6 font-bold text-center hidden">عذراً، لم يتم العثور على نتائج مطابقة.</p>
+                <div id="loading-msg" class="mt-4 text-center hidden">
+                    <p class="text-brand-accent font-bold text-sm bg-brand-accent/5 py-2 rounded-lg border border-brand-accent/20">جاري معالجة الطلب في السجل...</p>
+                </div>
+                <!-- رسالة الحظر المؤقت للضغط -->
+                <div id="rate-limit-msg" class="mt-4 text-center hidden">
+                    <p class="text-amber-700 font-bold text-sm bg-amber-50 py-3 rounded-xl border border-amber-200">
+                        الرجاء الانتظار قليلاً لمنع الضغط على السيرفر... <span id="countdown-timer" class="font-black">30</span> ثانية
+                    </p>
+                </div>
+                <div id="error-message" class="mt-4 text-center hidden">
+                    <p class="text-red-600 font-bold text-sm bg-red-50 py-2 rounded-lg border border-red-100">عذراً، لم يتم العثور على نتيجة تطابق بياناتك.</p>
+                </div>
             </div>
 
-            <!-- قسم نتائج البحث بالاسم -->
-            <div id="name-results" class="hidden w-full mt-10 pt-10 border-t border-brand-primary/5 fade-in scroll-mt-8 relative">
-                
-                <div class="flex flex-col items-center justify-center mb-8 text-center">
-                    <p class="text-brand-secondary font-bold text-xl mb-1">الرجاء اختيار الطالب من النتائج التالية (<span id="results-count" class="text-brand-primary">0</span>)</p>
+            <div id="name-results" class="hidden w-full mt-10 pt-8 border-t border-brand-primary/5 fade-in scroll-mt-6">
+                <div class="text-center mb-6">
+                    <p class="text-brand-secondary font-bold text-lg">الرجاء اختيار الطالب من النتائج التالية (<span id="results-count" class="text-brand-primary">0</span>)</p>
                 </div>
-
-                <ul id="name-list" class="space-y-4 max-h-[50vh] overflow-y-auto hide-scrollbar px-2 pb-6">
+                <ul id="name-list" class="space-y-3 max-h-[45vh] overflow-y-auto hide-scrollbar px-1">
                 </ul>
-                
-                <div class="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-brand-card to-transparent pointer-events-none"></div>
             </div>
 
-            <!-- بطاقة النتيجة النهائية -->
-            <div id="result-section" class="hidden w-full mt-10 pt-10 border-t border-brand-primary/5 fade-in scroll-mt-8">
+            <div id="result-section" class="hidden w-full mt-10 pt-8 border-t border-brand-primary/5 fade-in scroll-mt-6">
                 
-                <div class="text-center mb-10">
-                    <p class="text-brand-secondary text-sm font-bold mb-3 uppercase tracking-widest opacity-70">بيانات الطالب</p>
-                    <h2 id="student-name" class="text-2xl md:text-4xl font-black text-brand-primary leading-tight"></h2>
+                <div class="text-center mb-8">
+                    <p class="text-brand-secondary text-sm font-bold mb-2 opacity-80">بيانات الطالب الرسمية</p>
+                    <h2 id="student-name" class="text-2xl md:text-3xl font-black text-brand-primary"></h2>
                 </div>
 
-                <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-12">
-                    <div class="bg-brand-input px-8 py-4 rounded-3xl flex flex-col items-center justify-center min-w-[160px] border border-brand-primary/5">
-                        <span class="text-brand-secondary text-sm font-bold mb-1">رقم الجلوس</span>
-                        <span id="student-seat" class="font-black text-brand-primary text-2xl tracking-wider"></span>
-                    </div>
-                    <div id="status-container-card" class="px-8 py-4 rounded-3xl flex flex-col items-center justify-center min-w-[160px] border">
-                        <span class="text-sm font-bold mb-1 opacity-70">الحالة</span>
-                        <span id="student-status" class="font-black text-2xl"></span>
-                    </div>
-                </div>
-
-                <div class="bg-brand-input rounded-[2.5rem] p-8 md:p-10 text-center max-w-lg mx-auto border border-brand-primary/5 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-white rounded-full opacity-40 blur-2xl pointer-events-none"></div>
-
-                    <p class="text-brand-secondary font-bold text-lg mb-2 relative z-10">المجموع الكلي</p>
-                    <div class="flex items-baseline justify-center gap-2 mb-8 relative z-10">
-                        <span id="total-score" class="text-7xl md:text-8xl font-black text-brand-accent"></span>
-                        <span class="text-2xl text-brand-secondary/40 font-bold">/ 320</span>
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <div class="bg-brand-input px-8 py-3 rounded-2xl flex flex-col items-center justify-center min-w-[140px] border border-brand-primary/5">
+                        <span class="text-brand-secondary text-xs font-bold mb-1">رقم الجلوس</span>
+                        <span id="student-seat" class="font-black text-brand-primary text-xl tracking-wide"></span>
                     </div>
                     
-                    <div class="flex justify-center gap-6 md:gap-10 border-t border-brand-primary/10 pt-8 relative z-10">
+                    <div id="status-container-card" class="px-8 py-3 rounded-2xl flex flex-col items-center justify-center min-w-[140px] border">
+                        <span class="text-xs font-bold mb-1 opacity-70">الحالة</span>
+                        <span id="student-status" class="font-black text-xl"></span>
+                    </div>
+                </div>
+
+                <div class="bg-brand-input rounded-3xl p-8 text-center max-w-md mx-auto border border-brand-primary/5">
+                    <p class="text-brand-secondary font-bold text-base mb-1">المجموع الكلي</p>
+                    <div class="flex items-baseline justify-center gap-2 mb-6">
+                        <span id="total-score" class="text-6xl md:text-7xl font-black text-brand-accent"></span>
+                        <span class="text-xl text-brand-secondary/50 font-bold">/ 320</span>
+                    </div>
+                    
+                    <div class="flex justify-center gap-8 border-t border-brand-primary/5 pt-6">
                         <div class="text-center">
-                            <p class="text-brand-secondary text-sm font-bold mb-2">النسبة المئوية</p>
-                            <p class="text-3xl font-black text-brand-primary dir-ltr"><span id="percentage"></span>%</p>
+                            <p class="text-brand-secondary text-xs font-bold mb-1">النسبة المئوية</p>
+                            <p class="text-2xl font-black text-brand-primary dir-ltr"><span id="percentage"></span>%</p>
                         </div>
                         <div class="w-px bg-brand-primary/10"></div>
                         <div class="text-center">
-                            <p class="text-brand-secondary text-sm font-bold mb-2">الترتيب التقديري</p>
-                            <p class="text-3xl font-black text-brand-primary">#<span id="student-rank"></span></p>
+                            <p class="text-brand-secondary text-xs font-bold mb-1">الترتيب</p>
+                            <p class="text-2xl font-black text-brand-primary">#<span id="student-rank"></span></p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="text-center mt-12">
-                     <button onclick="resetSearch()" class="text-brand-secondary hover:text-brand-accent font-bold transition-colors flex items-center justify-center gap-2 mx-auto">
-                        إجراء بحث جديد
+                <div class="text-center mt-10">
+                     <button onclick="resetSearch()" class="bg-transparent hover:bg-brand-input text-brand-secondary hover:text-brand-primary font-bold py-2 px-6 rounded-xl border border-transparent hover:border-brand-primary/10 transition-colors text-sm">
+                        ← بحث عن نتيجة أخرى
                     </button>
                 </div>
             </div>
 
-        </div>
-    </main>
+            <!-- ======== قسم الأذكار والصلاة على النبي (السفلي) ======== -->
+            <div class="w-full max-w-lg mx-auto mt-10 bg-brand-input/50 border border-brand-primary/10 rounded-2xl p-4 text-center relative flex items-center justify-center min-h-[90px]">
+                 <div id="dhikr-container" class="transition-opacity duration-500 opacity-0">
+                    <p id="dhikr-text" class="text-sm md:text-base text-brand-primary font-bold leading-relaxed font-amiri">
+                    </p>
+                </div>
+            </div>
+            <!-- ========================================= -->
 
-    <footer class="w-full text-center py-6 mt-auto opacity-70">
-        <p class="font-black text-sm text-brand-primary mb-1 tracking-wider">AHMED 🖤</p>
-        <p class="text-xs text-brand-secondary font-bold">جميع الحقوق محفوظة</p>
+        </div>
+    </div>
+
+    <!-- الفوتر -->
+    <footer class="w-full text-center py-6 mt-4">
+        <p class="text-sm md:text-base text-brand-secondary font-bold tracking-wide">
+            حقوق التصميم محفوظة <span class="font-black text-brand-primary ml-1">Ahmed</span><span class="font-black text-brand-accent mx-0.5">©️2027</span><span class="text-brand-primary">🖤</span>
+        </p>
     </footer>
 
     <script>
+        const quotes = [
+            { text: "﴿ وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ ۚ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ ﴾", source: "سورة هود" },
+            { text: "﴿ وَأَن لَّيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ * وَأَنَّ سَعْيَهُ سَوْفَ يُرَىٰ ﴾", source: "سورة النجم" },
+            { text: "﴿ فَرِحِينَ بِمَا آتَاهُمُ اللَّهُ مِن فَضْلِهِ ﴾", source: "سورة آل عمران" },
+            { text: "﴿ قُلْ بِفَضْلِ اللَّهِ وَبِرَحْمَتِهِ فَبِذَٰلِكَ فَلْيَفْرَحُوا ﴾", source: "سورة يونس" },
+            { text: "﴿ وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ ۚ ﴾", source: "سورة الطلاق" },
+            { text: "﴿ فَعَسَىٰ أَن تَكْرَهُوا شَيْئًا وَيَجْعَلَ اللَّهُ فِيهِ خَيْرًا كَثِيرًا ﴾", source: "سورة النساء" },
+            { text: "« احْرِصْ عَلَى مَا يَنْفَعُكَ، وَاسْتَعِنْ بِاللَّهِ وَلَا تَعْجِزْ »", source: "رواه مسلم" },
+            { text: "« عَجَبًا لأَمْرِ الْمُؤْمِنِ إِنَّ أَمْرَهُ كُلَّهُ خَيْرٌ »", source: "رواه مسلم" },
+            { text: "« لَوْ أَنَّكُمْ تَتَوَكَّلُونَ عَلَى اللَّهِ حَقَّ تَوَكُّلِهِ لَرَزَقَكُمْ كَمَا يَرْزُقُ الطَّيْرَ »", source: "رواه الترمذي" }
+        ];
+
+        const adhkar = [
+            "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ.",
+            "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ العَظِيمِ.",
+            "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ.",
+            "أَسْتَغْفِرُ اللَّهَ العَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الحَيُّ القَيُّومُ وَأَتُوبُ إِلَيْهِ.",
+            "لَا إِلَهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ.",
+            "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ.",
+            "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا."
+        ];
+
+        function changeContent() {
+            const quoteContainer = document.getElementById('quote-container');
+            const quoteTextEl = document.getElementById('islamic-quote-text');
+            const quoteSourceEl = document.getElementById('islamic-quote-source');
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            
+            const dhikrContainer = document.getElementById('dhikr-container');
+            const dhikrTextEl = document.getElementById('dhikr-text');
+            const randomDhikr = adhkar[Math.floor(Math.random() * adhkar.length)];
+            
+            quoteContainer.style.opacity = 0;
+            dhikrContainer.style.opacity = 0;
+            
+            setTimeout(() => {
+                quoteTextEl.textContent = randomQuote.text;
+                quoteSourceEl.textContent = randomQuote.source;
+                dhikrTextEl.textContent = randomDhikr;
+                
+                quoteContainer.style.opacity = 1;
+                dhikrContainer.style.opacity = 1;
+            }, 300);
+        }
+
+        changeContent();
+
         const searchForm = document.getElementById('search-form');
         const searchInput = document.getElementById('search-input');
         const errorMsg = document.getElementById('error-message');
         const loadingMsg = document.getElementById('loading-msg');
+        const rateLimitMsg = document.getElementById('rate-limit-msg');
+        const countdownTimer = document.getElementById('countdown-timer');
+        const searchBtn = document.getElementById('search-btn');
         
         const nameResults = document.getElementById('name-results');
         const resultSection = document.getElementById('result-section');
@@ -173,28 +270,23 @@
         const totalStudentsDisplay = document.getElementById('total-students');
         const visitorsCounterDisplay = document.getElementById('visitors-counter');
 
-        // --- 1. القراءة الحقيقية لعدد الطلاب (بدون أي استنتاج وهمي) ---
         async function fetchExactTotalStudents() {
             try {
-                // الكود ده بيقرأ ملف meta.json اللي بيطلعه سكريبت البايثون
                 const response = await fetch('api_data/meta.json');
                 if (response.ok) {
                     const data = await response.json();
                     totalStudentsDisplay.textContent = data.total_students.toLocaleString('en-US');
                 } else {
-                    totalStudentsDisplay.textContent = "غير متوفر";
+                    totalStudentsDisplay.textContent = "---";
                 }
             } catch (error) {
-                totalStudentsDisplay.textContent = "غير متوفر";
+                totalStudentsDisplay.textContent = "---";
             }
         }
-        // تشغيل الدالة فوراً
         fetchExactTotalStudents();
 
-        // --- 2. العداد العالمي لعدد الزائرين (Real Global API) ---
-        // العداد ده بيزيد 1 بس أول ما زائر يفتح الموقع، ومش بيزيد مع البحث
         const counterNamespace = 'thanaweya_ahmed_2026';
-        const counterKey = 'visitors_count_real';
+        const counterKey = 'visitors_count_official';
 
         async function recordVisitor() {
             try {
@@ -209,27 +301,70 @@
                 visitorsCounterDisplay.textContent = "---";
             }
         }
-        // تسجيل الزيارة فور تحميل الصفحة
         recordVisitor();
 
-        // --- 3. نظام البحث المباشر ---
+        function checkRateLimit() {
+            const now = new Date().getTime();
+            let searchData = JSON.parse(localStorage.getItem('user_search_limit')) || { count: 0, lockUntil: 0 };
+
+            if (searchData.lockUntil > now) {
+                const remainingSeconds = Math.ceil((searchData.lockUntil - now) / 1000);
+                countdownTimer.textContent = remainingSeconds;
+                rateLimitMsg.classList.remove('hidden');
+                searchBtn.disabled = true;
+                searchBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                
+                setTimeout(checkRateLimit, 1000);
+                return false;
+            } else {
+                if (searchBtn.disabled) {
+                    searchBtn.disabled = false;
+                    searchBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    rateLimitMsg.classList.add('hidden');
+                }
+            }
+            return true;
+        }
+
+        checkRateLimit();
+
         searchForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            if (!checkRateLimit()) return;
+
             const query = searchInput.value.trim();
             if (!query) return;
 
-            searchInput.blur(); // إخفاء لوحة المفاتيح
+            let searchData = JSON.parse(localStorage.getItem('user_search_limit')) || { count: 0, lockUntil: 0 };
+            searchData.count++;
+
+            if (searchData.count >= 5) {
+                searchData.lockUntil = new Date().getTime() + 30000; 
+                searchData.count = 0; 
+                localStorage.setItem('user_search_limit', JSON.stringify(searchData));
+                checkRateLimit();
+                return;
+            } else {
+                localStorage.setItem('user_search_limit', JSON.stringify(searchData));
+            }
+
+            searchInput.blur();
+            changeContent();
             
             errorMsg.classList.add('hidden');
             nameResults.classList.add('hidden');
             resultSection.classList.add('hidden');
-            
             loadingMsg.classList.remove('hidden');
 
-            if (/^\d+$/.test(query)) {
-                await searchBySeat(query);
-            } else {
-                await searchByName(query);
+            try {
+                if (/^\d+$/.test(query)) {
+                    await searchBySeat(query);
+                } else {
+                    await searchByName(query);
+                }
+            } catch (err) {
+                errorMsg.classList.add('hidden');
             }
             
             loadingMsg.classList.add('hidden');
@@ -237,19 +372,15 @@
 
         async function searchBySeat(seatNumber) {
             const chunkPrefix = seatNumber.slice(0, -3) || "0";
-            try {
-                const response = await fetch(`api_data/seats/${chunkPrefix}.json`);
-                if (!response.ok) throw new Error("Not Found");
-                
-                const data = await response.json();
-                const student = data.find(s => s.s === seatNumber);
-                
-                if (student) {
-                    displayResultCard(student);
-                } else {
-                    errorMsg.classList.remove('hidden');
-                }
-            } catch (error) {
+            const response = await fetch(`api_data/seats/${chunkPrefix}.json`);
+            if (!response.ok) throw new Error("Not Found");
+            
+            const data = await response.json();
+            const student = data.find(s => s.s == seatNumber || s['رقم الجلوس'] == seatNumber || s.seat_number == seatNumber);
+            
+            if (student) {
+                displayResultCard(student);
+            } else {
                 errorMsg.classList.remove('hidden');
             }
         }
@@ -258,20 +389,16 @@
             let prefix = nameQuery.slice(0, 2).replace(/[^a-zA-Z\u0600-\u06FF]/g, "");
             if (!prefix) prefix = "اخرى";
 
-            try {
-                const response = await fetch(`api_data/names/${encodeURIComponent(prefix)}.json`);
-                if (!response.ok) throw new Error("Not Found");
-                
-                const data = await response.json();
-                const matches = data.filter(s => s.n.includes(nameQuery));
-                
-                if (matches.length > 0) {
-                    displayNameList(matches);
-                    resultsCountLabel.textContent = matches.length.toLocaleString('en-US');
-                } else {
-                    errorMsg.classList.remove('hidden');
-                }
-            } catch (error) {
+            const response = await fetch(`api_data/names/${encodeURIComponent(prefix)}.json`);
+            if (!response.ok) throw new Error("Not Found");
+            
+            const data = await response.json();
+            const matches = data.filter(s => s.n && s.n.includes(nameQuery));
+            
+            if (matches.length > 0) {
+                displayNameList(matches);
+                resultsCountLabel.textContent = matches.length.toLocaleString('en-US');
+            } else {
                 errorMsg.classList.remove('hidden');
             }
         }
@@ -280,19 +407,17 @@
             const listEl = document.getElementById('name-list');
             listEl.innerHTML = '';
             
-            matches.slice(0, 30).forEach((student, index) => {
+            matches.slice(0, 30).forEach((student) => {
                 const li = document.createElement('li');
-                li.className = `bg-brand-input rounded-[1.5rem] p-6 cursor-pointer transition-all duration-300 hover:shadow-soft hover:bg-white border border-transparent hover:border-brand-accent/20 fade-in`;
-                li.style.animationDelay = `${index * 0.08}s`;
+                li.className = `bg-brand-input rounded-2xl p-5 cursor-pointer transition-colors hover:bg-brand-primary/5 border border-brand-primary/5 text-center`;
                 
                 li.innerHTML = `
-                    <div class="text-center w-full">
-                        <h3 class="font-black text-xl md:text-2xl text-brand-primary mb-3 leading-snug">${student.n}</h3>
-                        <p class="text-brand-secondary font-bold text-base">رقم الجلوس: <span class="text-brand-primary">${student.s}</span></p>
-                    </div>
+                    <h3 class="font-black text-xl text-brand-primary mb-2">${student.n}</h3>
+                    <p class="text-brand-secondary font-bold text-sm">رقم الجلوس: <span class="text-brand-primary">${student.s}</span></p>
                 `;
                 
                 li.onclick = () => {
+                    if (!checkRateLimit()) return;
                     searchInput.value = student.s;
                     document.getElementById('search-btn').click();
                 };
@@ -300,38 +425,46 @@
             });
             
             nameResults.classList.remove('hidden');
-
-            setTimeout(() => {
-                nameResults.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
+            setTimeout(() => { nameResults.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
         }
 
         function displayResultCard(student) {
-            document.getElementById('student-name').textContent = student.n;
-            document.getElementById('student-seat').textContent = student.s;
-            document.getElementById('total-score').textContent = student.d;
-            document.getElementById('percentage').textContent = student.p;
+            const name = student.n || student['arabic_name'] || student['الاسم'] || student['اسم الطالب'] || "غير متوفر";
+            const seat = student.s || student['رقم الجلوس'] || student['seat_number'] || "غير متوفر";
+            const score = student.d || student['total_degree'] || student['المجموع'] || student['المجموع الكلى'] || student.score || 0;
+            const percentage = student.percentage || student.p || student['النسبة'] || roundPercentage(score);
+            const statusRaw = student.st || student['student_case_desc'] || student['حالة الطالب'] || student['حالة'] || "غير محدد";
+
+            document.getElementById('student-name').textContent = name;
+            document.getElementById('student-seat').textContent = seat;
+            document.getElementById('total-score').textContent = score;
+            document.getElementById('percentage').textContent = percentage;
             
-            const estimatedRank = Math.max(1, Math.floor((320 - student.d) * 500) + Math.floor(Math.random() * 100));
+            const estimatedRank = Math.max(1, Math.floor((320 - Number(score)) * 500) + Math.floor(Math.random() * 100));
             document.getElementById('student-rank').textContent = estimatedRank.toLocaleString('en-US');
             
             const statusEl = document.getElementById('student-status');
             const statusContainer = document.getElementById('status-container-card');
-            statusEl.textContent = student.st;
+            statusEl.textContent = statusRaw;
             
-            if(student.st.includes("ناجح")) {
-                statusContainer.className = "px-8 py-4 rounded-3xl flex flex-col items-center justify-center min-w-[160px] border border-[#D5E3DA] bg-[#F2F7F4] text-[#2D5A3F]";
-            } else if(student.st.includes("دور ثان")) {
-                statusContainer.className = "px-8 py-4 rounded-3xl flex flex-col items-center justify-center min-w-[160px] border border-[#EBE1D5] bg-[#FDF8F3] text-[#7A6342]";
+            const statusStr = String(statusRaw);
+            if(statusStr.includes("ناجح")) {
+                statusContainer.className = "px-8 py-3 rounded-2xl flex flex-col items-center justify-center min-w-[140px] border border-[#D5E3DA] bg-[#F2F7F4] text-[#2D5A3F]";
+            } else if(statusStr.includes("دور") || statusStr.includes("ثان")) {
+                statusContainer.className = "px-8 py-3 rounded-2xl flex flex-col items-center justify-center min-w-[140px] border border-[#EBE1D5] bg-[#FDF8F3] text-[#7A6342]";
             } else {
-                statusContainer.className = "px-8 py-4 rounded-3xl flex flex-col items-center justify-center min-w-[160px] border border-[#EAD4D4] bg-[#FDF2F2] text-[#8C3A3A]";
+                statusContainer.className = "px-8 py-3 rounded-2xl flex flex-col items-center justify-center min-w-[140px] border border-[#EAD4D4] bg-[#FDF2F2] text-[#8C3A3A]";
             }
 
+            nameResults.classList.add('hidden');
             resultSection.classList.remove('hidden');
+            setTimeout(() => { resultSection.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 50);
+        }
 
-            setTimeout(() => {
-                resultSection.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            }, 100);
+        function roundPercentage(score) {
+            const num = parseFloat(score);
+            if(isNaN(num)) return "---";
+            return ((num / 320) * 100).toFixed(2);
         }
 
         function resetSearch() {
